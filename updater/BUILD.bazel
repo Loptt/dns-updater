@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "updater",
+    srcs = [
+        "updater_duckdns.go",
+        "updater_interface.go",
+    ],
+    importpath = "github.com/Loptt/dns-updater/updater",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "updater_test",
+    srcs = ["updater_duckdns_test.go"],
+    embed = [":updater"],
+)
