@@ -4,6 +4,7 @@ go_library(
     name = "updater",
     srcs = [
         "updater_duckdns.go",
+        "updater_factory.go",
         "updater_interface.go",
     ],
     importpath = "github.com/Loptt/dns-updater/updater",
@@ -12,6 +13,9 @@ go_library(
 
 go_test(
     name = "updater_test",
-    srcs = ["updater_duckdns_test.go"],
+    srcs = [
+        "updater_duckdns_test.go",
+        "updater_factory_test.go",
+    ],
     embed = [":updater"],
 )
