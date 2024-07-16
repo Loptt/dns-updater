@@ -5,6 +5,7 @@ go_library(
     srcs = ["run.go"],
     importpath = "github.com/Loptt/dns-updater/cmd",
     visibility = ["//visibility:private"],
+    deps = ["//updater"],
 )
 
 go_binary(
