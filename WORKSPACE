@@ -27,6 +27,13 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 # The first declaration of an external repository "wins".
 ############################################################
 
+go_repository(
+	name = "com_github_jarcoal_httpmock",
+	importpath = "github.com/jarcoal/httpmock",
+	sum = "h1:iUx3whfZWVf3jT01hQTO/Eo5sAYtB2/rqaUuOtpInww=",
+	version = "v1.3.1"
+)
+
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.20.5")
