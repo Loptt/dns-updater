@@ -14,6 +14,7 @@ func TestRequestorHTTPRequest(t *testing.T) {
 	tests := []struct {
 		description string
 		r           RequestorInterface
+		url         string
 		want        string
 		want_err    error
 		setup       func()
@@ -21,7 +22,8 @@ func TestRequestorHTTPRequest(t *testing.T) {
 	}{
 		{
 			description: "Request with 200 status",
-			r:           &RequestorHttp{url: "http://test.com"},
+			r:           &RequestorHttp{},
+			url:         "http://test.com",
 			want:        "OK",
 			want_err:    nil,
 			setup: func() {
@@ -32,7 +34,8 @@ func TestRequestorHTTPRequest(t *testing.T) {
 		},
 		{
 			description: "Request with 200 status and empty body",
-			r:           &RequestorHttp{url: "http://test.com"},
+			r:           &RequestorHttp{},
+			url:         "http://test.com",
 			want:        "",
 			want_err:    nil,
 			setup: func() {
@@ -43,7 +46,8 @@ func TestRequestorHTTPRequest(t *testing.T) {
 		},
 		{
 			description: "Request with non-OK status returns error",
-			r:           &RequestorHttp{url: "http://test.com"},
+			r:           &RequestorHttp{},
+			url:         "http://test.com",
 			want:        "",
 			want_err:    errors.New("request failed with non-ok status"),
 			setup: func() {
@@ -56,7 +60,7 @@ func TestRequestorHTTPRequest(t *testing.T) {
 
 	for i, test := range tests {
 		test.setup()
-		got, err := test.r.Request()
+		got, err := test.r.Request(test.url)
 		test.cleanup()
 
 		if test.want_err != nil {
