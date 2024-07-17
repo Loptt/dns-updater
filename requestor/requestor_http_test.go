@@ -31,6 +31,17 @@ func TestRequestorHTTPRequest(t *testing.T) {
 			cleanup: func() { httpmock.DeactivateAndReset() },
 		},
 		{
+			description: "Request with 200 status and empty body",
+			r:           &RequestorHttp{url: "http://test.com"},
+			want:        "",
+			want_err:    nil,
+			setup: func() {
+				httpmock.Activate()
+				httpmock.RegisterResponder("GET", "http://test.com", httpmock.NewStringResponder(200, ""))
+			},
+			cleanup: func() { httpmock.DeactivateAndReset() },
+		},
+		{
 			description: "Request with non-OK status returns error",
 			r:           &RequestorHttp{url: "http://test.com"},
 			want:        "",
