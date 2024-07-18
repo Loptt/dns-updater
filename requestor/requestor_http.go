@@ -8,14 +8,17 @@ import (
 	"strings"
 )
 
-type RequestorHttp struct {
-	url string
-}
+// RequestorHttp implements the concrete RequestorInterface that sends HTTP
+// requests to remote services to perform the Request() action.
+type RequestorHttp struct{}
 
+// Encodes the status of a successful HTTP request.
 const statusOk = 200
 
-func (r *RequestorHttp) Request() (string, error) {
-	resp, err := http.Get(r.url)
+// Calls an HTTP GET to the `url` and returns the body of the request as a
+// string.
+func (r *RequestorHttp) Request(url string) (string, error) {
+	resp, err := http.Get(url)
 	if err != nil {
 		return "", fmt.Errorf("failed to do GET request at url: %v", err)
 	}

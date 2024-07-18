@@ -10,7 +10,8 @@ func main() {
 	uf := &updater.UpdaterDuckDNSFactory{}
 
 	domain := "lopttus"
-	u, err := uf.CreateUpdater(domain)
+	token := "test_token"
+	u, err := uf.CreateUpdater(domain, token)
 	if err != nil {
 		fmt.Printf("Failed to create updater with error: %v\n", err)
 	}

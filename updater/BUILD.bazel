@@ -9,6 +9,7 @@ go_library(
     ],
     importpath = "github.com/Loptt/dns-updater/updater",
     visibility = ["//visibility:public"],
+    deps = ["//requestor"],
 )
 
 go_test(
@@ -18,4 +19,5 @@ go_test(
         "updater_factory_test.go",
     ],
     embed = [":updater"],
+    deps = ["//requestor"],
 )

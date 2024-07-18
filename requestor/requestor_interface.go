@@ -4,5 +4,5 @@ package requestor
 // Requestors implement the business logic to connect to a remote service
 // and post an action to them.
 type RequestorInterface interface {
-	Request() (string, error)
+	Request(string) (string, error)
 }

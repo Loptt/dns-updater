@@ -8,29 +8,27 @@ import (
 func TestCreateUpdaterDuckDNS(t *testing.T) {
 	tests := []struct {
 		description string
-		uf          UpdaterFactoryInterface
-		u           UpdaterInterface
+		uf          *UpdaterDuckDNSFactory
 		domain      string
+		token       string
 		want_err    error
 	}{
 		{
 			description: "Create with no error",
 			uf:          &UpdaterDuckDNSFactory{},
-			u:           MakeUpdaterDuckDNS("test_domain"),
 			domain:      "test_domain",
 			want_err:    nil,
 		},
 		{
 			description: "Create with empty domain",
 			uf:          &UpdaterDuckDNSFactory{},
-			u:           MakeUpdaterDuckDNS(""),
 			domain:      "",
 			want_err:    errors.New("domain is empty"),
 		},
 	}
 
 	for i, test := range tests {
-		got, err := test.uf.CreateUpdater(test.domain)
+		got, err := test.uf.CreateUpdater(test.domain, test.token)
 
 		if test.want_err != nil {
 			if err == nil {
