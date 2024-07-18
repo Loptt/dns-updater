@@ -1,24 +1,46 @@
 package updater
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/Loptt/dns-updater/requestor"
+)
 
 // UpdaterDuckDNS is a concrete implementation of the UpdaterInterface object
 // that implements the logic to update DDNS records for DuckDNS
 // (https://www.duckdns.org/).
 type UpdaterDuckDNS struct {
 	domain string
+	token  string
+	r      requestor.RequestorInterface
 }
+
+// DuckDNS URL to update the DNS record.
+const duckDnsUpdateUrl = "https://www.duckdns.org/update"
+
+// DuckDNS string indicating a successful request.
+const duckDnsValidResponse = "OK"
 
 // Update function performs the action to update the DNS record.
 func (u *UpdaterDuckDNS) Update() error {
-	fmt.Printf("Updating %s\n", u.domain)
+	fullUrl := fmt.Sprintf("%s?domains=%s&token=%s", duckDnsUpdateUrl, u.domain, u.token)
+	result, err := u.r.Request(fullUrl)
+	if err != nil {
+		return fmt.Errorf("failed to request to domain %s: %v", u.domain, err)
+	}
+
+	if result != duckDnsValidResponse {
+		return fmt.Errorf("response returned by DuckDNS is invalid, got %s, expected %s", result, duckDnsValidResponse)
+	}
 
 	return nil
 }
 
-// MakeUopdaterDuckDNS creates a new UpdaterDuckDNS object.
-func MakeUpdaterDuckDNS(domain string) *UpdaterDuckDNS {
+// NewUpdaterDuckDNS creates a new UpdaterDuckDNS object.
+func NewUpdaterDuckDNS(domain, token string, r requestor.RequestorInterface) *UpdaterDuckDNS {
 	return &UpdaterDuckDNS{
 		domain: domain,
+		token:  token,
+		r:      r,
 	}
 }

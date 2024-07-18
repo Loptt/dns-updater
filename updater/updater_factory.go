@@ -1,21 +1,19 @@
 package updater
 
-import "fmt"
+import (
+	"fmt"
 
-// UpdaterFactoryInterface provides an abstract interface to create
-// UpdaterInterface concrete implementations.
-type UpdaterFactoryInterface interface {
-	CreateUpdater(string) (UpdaterInterface, error)
-}
+	"github.com/Loptt/dns-updater/requestor"
+)
 
-// UpdaterDuckDNSFactory is a concrete implementation of the
-// UpdaterFactoryInterface that creates UpdaterDuckDNS objects.
+// UpdaterDuckDNSFactory is a factory object that creates UpdaterDuckDNS
+// objects.
 type UpdaterDuckDNSFactory struct{}
 
 // CreateUpdater creates an updater object of DuckDNS type.
-func (uf *UpdaterDuckDNSFactory) CreateUpdater(domain string) (UpdaterInterface, error) {
+func (uf *UpdaterDuckDNSFactory) CreateUpdater(domain, token string) (UpdaterInterface, error) {
 	if len(domain) < 1 {
 		return nil, fmt.Errorf("empty string vwas provided as domain name")
 	}
-	return MakeUpdaterDuckDNS(domain), nil
+	return NewUpdaterDuckDNS(domain, token, &requestor.RequestorHttp{}), nil
 }

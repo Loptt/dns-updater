@@ -1,6 +1,10 @@
 package updater
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/Loptt/dns-updater/requestor"
+)
 
 func TestUpdate(t *testing.T) {
 	tests := []struct {
@@ -9,9 +13,9 @@ func TestUpdate(t *testing.T) {
 		u           UpdaterInterface
 	}{
 		{
-			description: "Update with no error",
+			description: "Update with OK status",
 			want:        nil,
-			u:           MakeUpdaterDuckDNS("test_domain"),
+			u:           NewUpdaterDuckDNS("test_domain", "test_token", &requestor.RequestorFake{Result: "OK", WantErr: false}),
 		},
 	}
 

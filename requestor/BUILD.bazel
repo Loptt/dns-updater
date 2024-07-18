@@ -3,6 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "requestor",
     srcs = [
+        "requestor_fake.go",
         "requestor_http.go",
         "requestor_interface.go",
     ],
@@ -14,5 +15,5 @@ go_test(
     name = "requestor_test",
     srcs = ["requestor_http_test.go"],
     embed = [":requestor"],
-    deps = ["@com_github_jarcoal_httpmock//:go_default_library"],
+    deps = ["@com_github_jarcoal_httpmock//:httpmock"],
 )
