@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"time"
 
+	"github.com/Loptt/dns-updater/scheduler"
 	"github.com/Loptt/dns-updater/updater"
 )
 
@@ -11,14 +13,13 @@ func main() {
 
 	domain := "lopttus"
 	token := "test_token"
+	interval := 1 * time.Second
 	u, err := uf.CreateUpdater(domain, token)
 	if err != nil {
 		fmt.Printf("Failed to create updater with error: %v\n", err)
 	}
 
-	if err := u.Update(); err != nil {
-		fmt.Printf("Failed to update with error: %v\n", err)
-	}
+	s := scheduler.NewScheduler(interval, u)
 
-	fmt.Printf("Update successful\n")
+	s.Run()
 }
