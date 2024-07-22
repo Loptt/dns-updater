@@ -14,6 +14,7 @@ type Scheduler struct {
 
 func (s *Scheduler) Run() {
 	runTicker := time.NewTicker(s.interval)
+    defer runTicker.Stop()
 
 	for range runTicker.C {
 		if err := s.ui.Update(); err != nil {
@@ -25,3 +26,4 @@ func (s *Scheduler) Run() {
 func NewScheduler(interval time.Duration, ui updater.UpdaterInterface) *Scheduler {
 	return &Scheduler{interval: interval, ui: ui}
 }
+
