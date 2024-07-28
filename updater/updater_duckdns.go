@@ -30,7 +30,7 @@ func (u *UpdaterDuckDNS) Update() error {
 	}
 
 	if result != duckDnsValidResponse {
-		return fmt.Errorf("response returned by DuckDNS is invalid, got %s, expected %s", result, duckDnsValidResponse)
+		return fmt.Errorf("response returned by DuckDNS is invalid for domain %s, got %s, expected %s", u.domain, result, duckDnsValidResponse)
 	}
 
 	return nil
