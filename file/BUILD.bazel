@@ -4,6 +4,7 @@ go_library(
     name = "file",
     srcs = [
         "file_manager.go",
+        "file_manager_fake.go",
         "file_manager_interface.go",
     ],
     importpath = "github.com/Loptt/dns-updater/file",

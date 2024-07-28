@@ -5,6 +5,10 @@ go_library(
     srcs = ["config.go"],
     importpath = "github.com/Loptt/dns-updater/config",
     visibility = ["//visibility:public"],
+    deps = [
+        "//file",
+        "@in_gopkg_yaml_v3//:yaml_v3",
+    ],
 )
 
 go_test(

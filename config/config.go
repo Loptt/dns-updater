@@ -1,19 +1,38 @@
 package config
 
+import (
+	"fmt"
+
+	"github.com/Loptt/dns-updater/file"
+	"gopkg.in/yaml.v3"
+)
+
 // Config contains the configuration values for the DNS updater service.
 type Config struct {
-	intervalSeconds uint64
-	domain          string
+	IntervalSeconds uint64
+	Domain          string
 }
 
 func (c Config) Equals(other Config) bool {
-	return c.intervalSeconds == other.intervalSeconds && c.domain == other.domain
+	return c.IntervalSeconds == other.IntervalSeconds && c.Domain == other.Domain
 }
 
-// ParseConfig takes a raw string representing the config in YAML format and
+// parseConfig takes a raw string representing the config in YAML format and
 // returns the config struct.
-func ParseConfig(raw_config string) Config {
-	//TODO(Loptt): Remove hardcoded values and parse them from the file. This
-	// needs the file package to be ready.
-	return Config{intervalSeconds: 86400, domain: "lopttus"}
+func parseConfig(raw_config string) (*Config, error) {
+	config := Config{}
+	err := yaml.Unmarshal([]byte(raw_config), &config)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse yaml content %s, got error: %v", raw_config, err)
+	}
+	return &config, nil
+}
+
+func LoadConfig(path string, fm file.FileManagerInterface) (*Config, error) {
+	content, err := fm.Read(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return parseConfig(content)
 }
