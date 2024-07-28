@@ -1,10 +1,10 @@
 package main
 
 import (
-    "testing"
-    "fmt"
+	"fmt"
+	"testing"
 )
 
 func Test(t *testing.T) {
-   fmt.Println("Emtpy test") 
+	fmt.Println("Emtpy test")
 }
