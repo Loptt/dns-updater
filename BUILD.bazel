@@ -1,4 +1,19 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+load("@rules_oci//oci:defs.bzl", "oci_image")
 
 # gazelle:prefix github.com/Loptt/dns-updater
 gazelle(name = "gazelle")
+
+pkg_tar(
+    name = "run_tar",
+    srcs = ["//cmd:cmd"],
+
+)
+
+oci_image(
+    name = "image",
+    base = "@distroless_base",
+    entrypoint = ["/app"],
+    tars = [":run_tar"],
+)
