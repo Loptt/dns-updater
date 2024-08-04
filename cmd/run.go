@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/Loptt/dns-updater/config"
@@ -27,6 +28,8 @@ func Run() error {
 	if err != nil {
 		return fmt.Errorf("failed to load config with error: %v", err)
 	}
+
+	log.Printf("Loaded config from %s, value is %v", *configPathFlag, *config)
 
 	// TODO(Loptt): Change this value to come from env variable.
 	token := "test_token"
