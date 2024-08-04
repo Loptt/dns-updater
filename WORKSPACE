@@ -66,16 +66,14 @@ oci_register_toolchains(
     # zot_version = LATEST_ZOT_VERSION,
 )
 
-# You can pull your base images using oci_pull like this:
 load("@rules_oci//oci:pull.bzl", "oci_pull")
 
 oci_pull(
     name = "distroless_base",
-    digest = "sha256:ccaef5ee2f1850270d453fdf700a5392534f8d1a8ca2acda391fbb6a06b81c86",
-    image = "gcr.io/distroless/base",
+    digest = "sha256:a7af3ef5d69f6534ba0492cc7d6b8fbcffddcb02511b45becc2fac752f907584",
+    image = "gcr.io/distroless/base-debian12",
     platforms = [
         "linux/amd64",
-        "linux/arm64",
     ],
 )
 
