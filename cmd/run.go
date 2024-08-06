@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/Loptt/dns-updater/config"
@@ -13,6 +14,7 @@ import (
 )
 
 const defaultConfigPath = "/etc/dns_updater/config.yaml"
+const duckDNSEnvVariable = "DUCKDNS_TOKEN"
 
 var configPathFlag = flag.String("config_path", defaultConfigPath, "Path for the configuration file to load")
 
@@ -31,8 +33,7 @@ func Run() error {
 
 	log.Printf("Loaded config from %s, value is %v", *configPathFlag, *config)
 
-	// TODO(Loptt): Change this value to come from env variable.
-	token := "test_token"
+	token := os.Getenv(duckDNSEnvVariable)
 
 	uf := &updater.UpdaterDuckDNSFactory{}
 	u, err := uf.CreateUpdater(config.Domain, token)
@@ -48,6 +49,6 @@ func Run() error {
 
 func main() {
 	if err := Run(); err != nil {
-		fmt.Printf("Run failed with error: %v", err)
+		fmt.Printf("Run failed with error: %v\n", err)
 	}
 }
