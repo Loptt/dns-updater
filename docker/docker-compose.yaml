@@ -1,0 +1,14 @@
+services:
+  dns_updater:
+    image: dns-updater:latest
+    secrets:
+      - duckdns_token
+    volumes:
+      - /etc/dns_updater/config.yaml:/etc/dns_updater/config.yaml
+    environment:
+      DUCKDNS_TOKEN: test_token
+
+secrets:
+  duckdns_token:
+    file: /etc/dns_updater/duckdns_token.txt 
+

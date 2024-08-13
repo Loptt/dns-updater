@@ -2,6 +2,7 @@ package updater
 
 import (
 	"fmt"
+    "log"
 
 	"github.com/Loptt/dns-updater/requestor"
 )
@@ -32,6 +33,8 @@ func (u *UpdaterDuckDNS) Update() error {
 	if result != duckDnsValidResponse {
 		return fmt.Errorf("response returned by DuckDNS is invalid for domain %s, got %s, expected %s", u.domain, result, duckDnsValidResponse)
 	}
+
+    log.Printf("Successfully updated domain %s\n", u.domain)
 
 	return nil
 }
