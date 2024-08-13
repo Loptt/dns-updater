@@ -7,15 +7,14 @@ gazelle(name = "gazelle")
 
 pkg_tar(
     name = "run_tar",
-    srcs = ["//cmd:cmd"],
-
+    srcs = ["//cmd"],
 )
 
 oci_image(
     name = "dns_updater",
     base = "@distroless_base",
-    tars = [":run_tar"],
     entrypoint = ["/cmd"],
+    tars = [":run_tar"],
 )
 
 oci_tarball(
@@ -23,4 +22,3 @@ oci_tarball(
     image = ":dns_updater",
     repo_tags = ["dns-updater:latest"],
 )
-
