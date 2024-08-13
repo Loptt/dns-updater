@@ -21,3 +21,7 @@ func (sm *SecretManagerFile) Fetch(key string) (string, error) {
 
 	return result, nil
 }
+
+func NewSecretManagerFile(f file.FileManagerInterface) *SecretManagerFile {
+	return &SecretManagerFile{f: f}
+}
