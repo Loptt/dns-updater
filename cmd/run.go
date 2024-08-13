@@ -15,8 +15,10 @@ import (
 
 const defaultConfigPath = "/etc/dns_updater/config.yaml"
 const duckDNSSecretFile = "/run/secrets/duckdns_token"
+const duckDNSSecretEnv = "DUCKDNS_TOKEN"
 
 var configPathFlag = flag.String("config_path", defaultConfigPath, "Path for the configuration file to load")
+var useEnvToken = flag.Bool("use_env", false, "Whether to load secrets from ENV")
 
 func Run() error {
 	// Parse all flags before using them.
@@ -35,8 +37,17 @@ func Run() error {
 
 	// SecretManagerInterface is used to fetch the token used to authenticate
 	// with the DDNS service.
-	sm := secret.NewSecretManagerFile(fm)
-	token, err := sm.Fetch(duckDNSSecretFile)
+	var sm secret.SecretManagerInterface
+	var key string
+	if *useEnvToken {
+		sm = secret.NewSecretManagerEnv()
+		key = duckDNSSecretEnv
+	} else {
+		sm = secret.NewSecretManagerFile(fm)
+		key = duckDNSSecretFile
+	}
+
+	token, err := sm.Fetch(key)
 	if err != nil {
 		return fmt.Errorf("failed to get secret token with error %v", err)
 	}
