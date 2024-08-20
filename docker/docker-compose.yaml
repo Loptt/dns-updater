@@ -1,6 +1,7 @@
 services:
   dns_updater:
     image: dns-updater:latest
+    restart: always
     secrets:
       - duckdns_token
     volumes:
